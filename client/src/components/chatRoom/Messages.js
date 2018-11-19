@@ -41,7 +41,7 @@ class Messages extends React.Component {
             })
 
             return (
-                <Segment raised style={{height: 'calc(100vh - 150px)', margin: 10, width: 'calc(100vw - 300px)', overflow: 'scroll'}>
+                <Segment raised style={{height: 'calc(100vh - 150px)', margin: 10, width: 'calc(100vw - 300px)', overflow: 'scroll'}}>
                     {messagesList.length > 0 ? messagesList:
                         <div>
                             <p>No messages... <br/> Starting a conversation.</p>
