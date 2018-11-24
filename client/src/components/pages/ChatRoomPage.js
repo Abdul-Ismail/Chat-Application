@@ -27,7 +27,6 @@ class ChatRoomPage extends React.Component{
     }
 
     removeMessageFromChat = (chatName, messageID, permanentStateMessage, currentStateMessages) => {
-        console.log(chatName, messageID, permanentStateMessage, currentStateMessages)
         this.setState(() => ({
             //filter out the message that was delete and update state
             [permanentStateMessage]: this.state[permanentStateMessage].filter(message => {
@@ -114,6 +113,13 @@ class ChatRoomPage extends React.Component{
 
                 const sentdAndReceived = receivedMessagesForCuurentChat.concat(sentdMessagesForCuurentChat)
 
+                //sort the messages
+                sentdAndReceived.sort(function(a, b) {
+                    if (a.timestamp <  b.timestamp) return -1;
+                    if (a.timestamp >  b.timestamp) return 1;
+                    return 0;
+                });
+
                 this.setState({
                     currentPrivateMessageFiltered: sentdAndReceived,
                 })
@@ -122,6 +128,13 @@ class ChatRoomPage extends React.Component{
                 const currentRoomMessages = this.state.roomMessages.filter(message => {
                     return message.room === nextProps.chatBeingViewed.chatName
                 })
+
+                //sort the messafes
+                currentRoomMessages.sort(function(a, b) {
+                    if (a.timestamp <  b.timestamp) return -1;
+                    if (a.timestamp >  b.timestamp) return 1;
+                    return 0;
+                });
 
                 this.setState({
                     currentRoomMessages: currentRoomMessages,
@@ -148,7 +161,7 @@ class ChatRoomPage extends React.Component{
             firebase.database().ref('roomMessages').push({
                 message: this.state.newMessage,
                 by: this.state.uid,
-                timestamp: 23,
+                timestamp: Date.now(),
                 room: this.state.chatBeingViewed.chatName
             }).catch(err => console.log(err))
 
@@ -159,14 +172,14 @@ class ChatRoomPage extends React.Component{
 
             firebase.database().ref('users').child(this.state.uid).child('privateMessagesSent').child(id).set({
                 message: this.state.newMessage,
-                timestamp: 23,
+                timestamp: Date.now(),
                 to: this.state.chatBeingViewed.chatName,
                 by: this.state.uid
             }).catch(err => console.log(err))
 
             firebase.database().ref('users').child(this.state.chatBeingViewed.chatName).child('privateMessagesReceived').child(id).set({
                 message: this.state.newMessage,
-                timestamp: 23,
+                timestamp: Date.now(),
                 from: this.state.uid,
                 by: this.state.uid
             }).catch(err => console.log(err))
@@ -193,7 +206,7 @@ class ChatRoomPage extends React.Component{
                                 placeholder="Enter message"
                                 value={newMessage}
                                 onChange={this.messageFieldChanged}
-                                style={{ width: 'calc(100vw - 300px)'}}
+                                style={{ width: 'calc(100vw - 300px)', marginLeft: '10px'}}
                             />
                         </form>
                     </div>

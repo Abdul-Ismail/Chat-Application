@@ -1,15 +1,23 @@
 import React from 'react';
 import ErrorMessage from '../messages/ErrorMessage'
 import PropTypes from 'prop-types'
+import { Input, Button } from 'semantic-ui-react'
+import { Divider, Form, Label } from 'semantic-ui-react'
+import { Segment } from 'semantic-ui-react'
+
+
 
 class UsernameForm extends React.Component {
     state = {
         username: '',
         loading: false,
-        error: ''
+        error: '',
+        inputType: 'loading'
     };
 
-    submitName = async () => {
+    submitName = async (e) => {
+        e.preventDefault()
+        console.log(this.state.username)
         let error = this.validateUsername(this.state.username)
 
         if (error) {
@@ -35,18 +43,34 @@ class UsernameForm extends React.Component {
     }
 
     render() {
-        const { username, error } = this.state
+        const { username, error, inputType } = this.state
         return (
-            <div>
-                <input
-                    placeholder="username"
-                    value={username}
-                    onChange={this.usernameChanged}
-                />
-                { (error !== '') && <ErrorMessage text={error}/>}
 
-                <button onClick={this.submitName}> Submit </button>
+            <div>
+                <h2 style={{color: '#999'}}>Create a username</h2>
+
+                <div style={{minHeight: '40px'}}>
+                {
+                (error !== '') &&
+                <Label basic color='red' pointing='below'>
+                {error}
+                </Label>
+                }
+                </div>
+
+                <form  onSubmit={this.submitName}>
+                <Input style={{width: '250px', marginBottom: '10px'}}
+                type='text'
+                placeholder="Enter username"
+                value={username}
+                onChange={this.usernameChanged}
+                />
+                </form>
+
+                <Button primary style={{width: '250px'}} onClick={this.submitName}> Submit </Button>
             </div>
+
+
         )
     }
 }

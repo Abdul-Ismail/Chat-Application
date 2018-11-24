@@ -5,6 +5,7 @@ import {deleteDummy} from "../../actions/dummyAction";
 import {connect} from "react-redux";
 import { saveUserID } from '../../actions/uidAction'
 import * as firebase from 'firebase';
+import { Segment } from 'semantic-ui-react'
 
 
 class UsernamePage extends React.Component{
@@ -32,10 +33,12 @@ class UsernamePage extends React.Component{
 
     render() {
         return (
-            <div>
-                <h1>Pick a username!</h1>
+
+            <Segment raised id="usernameFieldContainer">
+                <h1>Lab 4 <br/> Rich web <br/> Abdulaziz Ismail</h1>
                 <UsernameForm submit={this.submit} />
-            </div>
+            </Segment>
+
         )
     }
 }
@@ -56,3 +59,6 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsernamePage)
 
+// <div style={{textAlign: 'center', marginTop: '50px'}}>
+//
+// </div>

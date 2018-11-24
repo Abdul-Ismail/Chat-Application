@@ -7,7 +7,8 @@ const initState = {
     chatBeingViewed: {
         chatName: 'room',
         isRoom: true
-    }
+    },
+    roomMessages: []
 }
 
 const rootReducer = (state = initState, action) => {
@@ -41,6 +42,24 @@ const rootReducer = (state = initState, action) => {
                 chatName: action.chatname,
                 isRoom: action.isRoom
             }
+        }
+    } else if (action.type === 'NEW_ROOM_MESSAGE'){
+        const messages = state.roomMessages
+        messages.push(action.message)
+
+        // console.log(messages)
+
+        return {
+            ...state,
+            roomMessages: messages
+        }
+    } else if (action.type === 'DELETE_ROOM_MESSAGE'){
+        console.log(state.roomMessages)
+        return {
+            ...state,
+            roomMessages: state.roomMessages.filter(message => {
+                return message.id !== action.message_id
+            })
         }
     }
 

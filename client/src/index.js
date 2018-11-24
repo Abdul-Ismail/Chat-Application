@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import rootReducer from './reducers/rootReducer'
 import 'semantic-ui-css/semantic.min.css';
 import { saveUserID } from './actions/uidAction'
+import './style.css'
 
 
 
