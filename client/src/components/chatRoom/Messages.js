@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types"
 import { Segment } from 'semantic-ui-react'
 import {connect} from "react-redux";
-import * as firebase from 'firebase';
+import firebase from '../../config/firebaseConfig'
 import { Button } from 'semantic-ui-react'
 
 class Messages extends React.Component {

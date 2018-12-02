@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import UsernameForm from '../forms/UsernameForm'
-import {deleteDummy} from "../../actions/dummyAction";
 import {connect} from "react-redux";
 import { saveUserID } from '../../actions/uidAction'
-import * as firebase from 'firebase';
+import firebase from '../../config/firebaseConfig'
 import { Segment } from 'semantic-ui-react'
 
 
