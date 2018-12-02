@@ -1,5 +1,4 @@
 import React from 'react';
-import { Route } from 'react-router-dom'
 import ChatRoomRoute from './components/routes/ChatRoomRoute'
 import UsernamePageRoute from './components/routes/UsernamePageRoute'
 import UsernamePage from './components/pages/UsernamePage'

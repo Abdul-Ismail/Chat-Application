@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { Input, Button } from 'semantic-ui-react'
 import { Label } from 'semantic-ui-react'
 
-
-
 class UsernameForm extends React.Component {
     state = {
         username: '',
@@ -67,8 +65,6 @@ class UsernameForm extends React.Component {
 
                 <Button primary style={{width: '250px'}} onClick={this.submitName}> Submit </Button>
             </div>
-
-
         )
     }
 }
@@ -76,6 +72,5 @@ class UsernameForm extends React.Component {
 UsernameForm.propTypes = {
     submit: PropTypes.func.isRequired
 };
-
 
 export default UsernameForm

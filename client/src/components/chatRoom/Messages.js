@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from "prop-types"
 import { Segment } from 'semantic-ui-react'
 import {connect} from "react-redux";
 import firebase from '../../config/firebaseConfig'
 import { Button } from 'semantic-ui-react'
 
 class Messages extends React.Component {
-
     deletePost = (message) => {
         //only delete if users id is the same as the person who posted the comment
         //only creators can see delete button but just extra check
@@ -42,7 +40,6 @@ class Messages extends React.Component {
                         <p style={{fontWeight: 'bold', marginBottom: 0}}>{message.by}</p>
                         <p style={{marginTop: 0, marginBottom: 0}}>{message.message}</p>
                         <p style={{marginTop: 0, marginBottom: 0, fontSize: '12px', color: 'grey'}}>{timeConverter(message.timestamp)}</p>
-
                         {
                             message.by === uid ? (
                                 <Button negative style={{height: '20px', fontSize: '10px', margin: 0, padding: 5}}

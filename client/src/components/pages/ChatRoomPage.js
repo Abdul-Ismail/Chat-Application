@@ -4,7 +4,6 @@ import firebase from '../../config/firebaseConfig'
 import Messages from '../chatRoom/Messages'
 import Sidebar from '../chatRoom/Sidebar'
 import { connect} from 'react-redux'
-import {deleteDummy} from '../../actions/dummyAction'
 import { Input, Button } from 'semantic-ui-react'
 
 
@@ -220,12 +219,5 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        deleteDummy: (value => {
-            dispatch(deleteDummy(value))
-        })
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomPage)
+export default connect(mapStateToProps)(ChatRoomPage)
