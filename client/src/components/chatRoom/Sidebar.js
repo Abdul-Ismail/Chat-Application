@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button, Header, Image, Modal } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 import firebase from '../../config/firebaseConfig'
 import roomAction from "../../actions/roomAction";
 import {connect} from "react-redux";
-import PropTypes from 'prop-types';
 import { Input } from 'semantic-ui-react';
 
 

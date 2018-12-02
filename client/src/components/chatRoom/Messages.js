@@ -7,11 +7,6 @@ import { Button } from 'semantic-ui-react'
 
 class Messages extends React.Component {
 
-    state = {
-        name: 'zizo'
-    }
-
-
     deletePost = (message) => {
         //only delete if users id is the same as the person who posted the comment
         //only creators can see delete button but just extra check
@@ -25,8 +20,6 @@ class Messages extends React.Component {
             }
         }
     }
-
-
 
         render() {
             const {roomMessages, uid} =this.props
@@ -78,5 +71,5 @@ class Messages extends React.Component {
     }
 }
 
-    export default connect(mapStateToProps)(Messages)
+export default connect(mapStateToProps)(Messages)
 

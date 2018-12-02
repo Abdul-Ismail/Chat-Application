@@ -1,9 +1,7 @@
 import React from 'react';
-import ErrorMessage from '../messages/ErrorMessage'
 import PropTypes from 'prop-types'
 import { Input, Button } from 'semantic-ui-react'
-import { Divider, Form, Label } from 'semantic-ui-react'
-import { Segment } from 'semantic-ui-react'
+import { Label } from 'semantic-ui-react'
 
 
 

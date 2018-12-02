@@ -1,11 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types'
 import UsernameForm from '../forms/UsernameForm'
 import {connect} from "react-redux";
 import { saveUserID } from '../../actions/uidAction'
 import firebase from '../../config/firebaseConfig'
 import { Segment } from 'semantic-ui-react'
-
 
 class UsernamePage extends React.Component{
     submit = (async uid => {
@@ -37,7 +35,6 @@ class UsernamePage extends React.Component{
                 <h1>Lab 4 <br/> Rich web <br/> Abdulaziz Ismail</h1>
                 <UsernameForm submit={this.submit} />
             </Segment>
-
         )
     }
 }
@@ -57,7 +54,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsernamePage)
-
-// <div style={{textAlign: 'center', marginTop: '50px'}}>
-//
-// </div>

@@ -151,10 +151,6 @@ class ChatRoomPage extends React.Component{
         return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
     }
 
-    postCommentToDatabase = (dbRef, obj) => {
-        firebase.database().ref(dbRef).push(obj).catch(err => console.log(err))
-    }
-
     postComment = (e) => {
         e.preventDefault()
         if (this.state.chatBeingViewed.isRoom){
@@ -229,9 +225,6 @@ const mapDispatchToProps = (dispatch) => {
         deleteDummy: (value => {
             dispatch(deleteDummy(value))
         })
-        // deleteDummy: (value => {
-        //     dispatch({type: 'DELETE_DUMMY', value: value})
-        // })
     }
 }
 
