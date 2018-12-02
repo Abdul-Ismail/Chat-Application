@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types'
 import firebase from '../../config/firebaseConfig'
 import Messages from '../chatRoom/Messages'
 import Sidebar from '../chatRoom/Sidebar'
 import { connect} from 'react-redux'
-import { Input, Button } from 'semantic-ui-react'
+import { Input } from 'semantic-ui-react'
 
 
 class ChatRoomPage extends React.Component{
@@ -76,21 +75,34 @@ class ChatRoomPage extends React.Component{
            mainScope.removeMessageFromChat(snapshot.val().room, snapshot.key, 'roomMessages', 'currentRoomMessages')
         });
 
+        //listen to any new private messages
         firebase.database().ref('users').child(this.state.uid).child('privateMessagesSent').on('child_added', snapshot => {
             mainScope.addMessageToChat(snapshot.val(),  snapshot.key, 'privateMessagesSent', 'currentPrivateMessageFiltered')
         });
 
+        //listen to any private messages that were sent out that the user removed
         firebase.database().ref('users').child(this.state.uid).child('privateMessagesSent').on('child_removed', snapshot => {
             mainScope.removeMessageFromChat(snapshot.val().to, snapshot.key, 'privateMessagesSent', 'currentPrivateMessageFiltered')
         });
 
+        //listen to a any private messages that were received
         firebase.database().ref('users').child(this.state.uid).child('privateMessagesReceived').on('child_added', snapshot => {
             mainScope.addMessageToChat(snapshot.val(), snapshot.key, 'privateMessagesReceived', 'currentPrivateMessageFiltered')
         });
 
+        //listen to any private received private message that were dellete
         firebase.database().ref('users').child(this.state.uid).child('privateMessagesReceived').on('child_removed', snapshot => {
             mainScope.removeMessageFromChat(snapshot.val().from, snapshot.key, 'privateMessagesReceived', 'currentPrivateMessageFiltered')
         });
+    }
+
+    sortMessages = (messages) => {
+        return messages.sort(function(a, b) {
+            if (a.timestamp <  b.timestamp) return -1;
+            if (a.timestamp >  b.timestamp) return 1;
+            return 0;
+        });
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -99,28 +111,27 @@ class ChatRoomPage extends React.Component{
                 chatBeingViewed: nextProps.chatBeingViewed,
             })
 
-            // private
+            //if the current that being viewed is a private chat
             if (!nextProps.chatBeingViewed.isRoom){
 
-                const receivedMessagesForCuurentChat = this.state.privateMessagesReceived.filter(message => {
+                //filter out all the private messages that were not send from the user that the chat is open on
+                const receivedMessagesForCurrentChat = this.state.privateMessagesReceived.filter(message => {
                     return message.from === nextProps.chatBeingViewed.chatName
                 })
 
-                const sentdMessagesForCuurentChat = this.state.privateMessagesSent.filter(message => {
+                //filter out all private messages that were sent that was not sent to this user
+                const sentMessagesForCurrentChat = this.state.privateMessagesSent.filter(message => {
                     return message.to === nextProps.chatBeingViewed.chatName
                 })
 
-                const sentdAndReceived = receivedMessagesForCuurentChat.concat(sentdMessagesForCuurentChat)
+                const sentAndReceived = receivedMessagesForCurrentChat.concat(sentMessagesForCurrentChat)
 
-                //sort the messages
-                sentdAndReceived.sort(function(a, b) {
-                    if (a.timestamp <  b.timestamp) return -1;
-                    if (a.timestamp >  b.timestamp) return 1;
-                    return 0;
-                });
+                //sort the messages by most recent
+                const sentAndReceivedSorted = this.sortMessages(sentAndReceived)
 
+                //set the current private messages to all the message from and to the current user that the chat is open on
                 this.setState({
-                    currentPrivateMessageFiltered: sentdAndReceived,
+                    currentPrivateMessageFiltered: sentAndReceivedSorted,
                 })
             }else {
                 //get current messages for the room the user has open
@@ -128,21 +139,19 @@ class ChatRoomPage extends React.Component{
                     return message.room === nextProps.chatBeingViewed.chatName
                 })
 
-                //sort the messafes
-                currentRoomMessages.sort(function(a, b) {
-                    if (a.timestamp <  b.timestamp) return -1;
-                    if (a.timestamp >  b.timestamp) return 1;
-                    return 0;
-                });
+                //sort the message by most recent
+                const currentRoomMessagesSorted = this.sortMessages(currentRoomMessages)
 
                 this.setState({
-                    currentRoomMessages: currentRoomMessages,
+                    currentRoomMessages: currentRoomMessagesSorted,
                 })
             }
-
         }
     }
 
+    //generate a unique id, this is done because when a message is sent it is stored for both users, the one that sent it
+    //and the one that received. They are both given the same id so that when the sender deletes the message, then the message
+    //will be deleted from both users
     generateID = () => {
         var S4 = function() {
             return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -152,6 +161,8 @@ class ChatRoomPage extends React.Component{
 
     postComment = (e) => {
         e.preventDefault()
+
+        //if the current chat that is open then post the message to the corresponding room
         if (this.state.chatBeingViewed.isRoom){
             firebase.database().ref('roomMessages').push({
                 message: this.state.newMessage,
@@ -186,7 +197,7 @@ class ChatRoomPage extends React.Component{
     }
 
     render() {
-        const { roomMessages, newMessage, currentRoom, chatBeingViewed, uid, currentPrivateMessageFiltered, currentRoomMessages } = this.state
+        const { newMessage, uid, currentPrivateMessageFiltered, currentRoomMessages } = this.state
         return (
             <div>
                 <Sidebar/>
@@ -218,6 +229,5 @@ const mapStateToProps = (state) => {
         chatBeingViewed: state.chatBeingViewed
     }
 }
-
 
 export default connect(mapStateToProps)(ChatRoomPage)
