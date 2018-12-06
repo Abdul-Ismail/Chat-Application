@@ -24,7 +24,7 @@ class Messages extends React.Component {
             const deletePost = this.deletePost
 
             const timeConverter = (UNIX_timestamp) => {
-                var a = new Date(UNIX_timestamp * 1000);
+                var a = new Date(UNIX_timestamp);
                 var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
                 var month = months[a.getMonth()];
                 var date = a.getDate();
