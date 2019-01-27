@@ -1,5 +1,5 @@
 # Chat Application
-A chap application built using React for the fronte-end, Firebase as the real-time database and NodeJS/Express for the backend. 
+A chat application built using React for the front-end, Firebase as the real-time database and NodeJS/Express for the backend. 
 The application allows for a user to message a user individually or message users that are in a room.
 
 ### Accessing the application
