@@ -1,4 +1,4 @@
-# React_Chat_App
+# Chat Application
 A chap application built using React for the fronte-end and Firebase as the real-time database. 
 The application allows for a user to message a user individually or message users that are in a room.
 
