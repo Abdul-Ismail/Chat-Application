@@ -32,7 +32,7 @@ class UsernamePage extends React.Component{
         return (
 
             <Segment raised id="usernameFieldContainer">
-                <h1>Lab 4 <br/> Rich web <br/> Abdulaziz Ismail</h1>
+                <h1>Chat Application <br/> Abdulaziz Ismail</h1>
                 <UsernameForm submit={this.submit} />
             </Segment>
         )
