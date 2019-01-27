@@ -1,5 +1,6 @@
 # React_Chat_App
-A chap application built using react
+A chap application built using React for the fronte-end and Firebase as the real-time database. 
+The application allows for a user to message a user individually or message users that are in a room.
 
 ### Accessing the application
 The application has been hosted on the following linking:
